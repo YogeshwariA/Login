@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet {
 	@Override
@@ -21,7 +19,11 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	public void service(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		doPost(request, response);
+	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.getWriter().println("Succeesully logout.");
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -50,10 +52,12 @@ public class LoginServlet extends HttpServlet {
 		String name = req.getParameter("username");
 		String password = req.getParameter("password");
 		if ("Ajith".equals(name) && "Ajith".equals(password)) {
-			HttpSession session=req.getSession(true);
-			session.setAttribute("isLoggedIn", true);
-			resp.setStatus(HttpServletResponse.SC_OK);
-			req.getRequestDispatcher("/contact").forward(req, resp);
+
+			HttpSession session = req.getSession();
+			session.setAttribute("username", name);
+			req.getRequestDispatcher("/main").forward(req, resp);
+
+			// resp.setStatus(HttpServletResponse.SC_OK);
 		} else {
 			resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			resp.getWriter().println("Please give correct username and password.");
