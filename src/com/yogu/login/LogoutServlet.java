@@ -12,15 +12,26 @@ import javax.servlet.http.HttpSession;
 public class LogoutServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
+		String method = req.getMethod();
+		if ("get".equalsIgnoreCase(method)) {
+			doGet(req, resp);
+		} else {
+			doPost(req, resp);
+		}
+	}
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.getRequestDispatcher("/WEB-INF/logout.html");
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		HttpSession session = req.getSession();
 		if (session != null) {
-			session.setAttribute("username", null);
-			resp.sendRedirect("/home");
+			session.invalidate();
+			resp.getWriter().println("Successfully logout.");
+			resp.sendRedirect("/");
 
 		}
 	}
