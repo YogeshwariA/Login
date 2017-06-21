@@ -1,23 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
-
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>Hello App Engine</title>
 </head>
 
-<body>
+<body style="margin-left: 500px; height: 260px; width: 260px;">
+	<form action="/gotosignup" method="get">
+		<input type="submit" value="SignUp">
+	</form>
 	<form action="/login" method="post">
 		<table>
+
 			<tr>
-				<td><label>Username:</label> <input type="text" name="username"
-					id="userName"></td>
+				<td><label>EmailId:</label> <input type="text" name="emailId"
+					id="emailId"></td>
 			</tr>
 
 			<tr>
@@ -26,26 +22,11 @@
 			</tr>
 
 			<tr>
-				<td><input type="radio" name="gender" value="male">Male</td>
-				<td><input type="radio" name="gender" value="female">Female</td>
-				<td><input type="radio" name="gender" value="other">Other</td>
-			</tr>
-
-			<tr>
-				<td><label>DateOfBirth:</label> <input type="date"
-					name="birthDay" id="BirthDay"></td>
-			</tr>
-
-			<tr>
-				<td><label>EmailId:</label> <input type="text" name="emailId"
-					id="emailId"></td>
-			</tr>
-
-			<tr>
-				<td><input type="submit" value="Submit"></td>
+				<td><input type="submit" value="Login"></td>
 			</tr>
 
 		</table>
 	</form>
+
 </body>
 </html>

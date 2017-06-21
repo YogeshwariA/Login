@@ -1,12 +1,50 @@
-<!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <title>SignUp</title>
 </head>
-<body>
-<form action="/home" method="get">
-<input type="submit" name="signUp" id="signUp" value="SignUp">
-</form>
-</body>   
+
+<body style="margin-left: 500px; height: 260px; width: 260px;">
+
+	<form action="/signup" method="post">
+		<table>
+
+			<tr>
+				<td><label>FirstName:</label> <input type="text"
+					name="firstName" id="firstName"></td>
+			</tr>
+
+			<tr>
+				<td><label>LastName:</label> <input type="text" name="lastName"
+					id="lastName"></td>
+			</tr>
+
+			<tr>
+				<td><label>EmailId:</label> <input type="text" name="emailId"
+					id="emailId"></td>
+			</tr>
+
+			<tr>
+				<td><label>Password:</label> <input type="password"
+					name="password" id="password"></td>
+			</tr>
+
+			<tr>
+				<td><input type="radio" name="gender" value="male">Male
+					<input type="radio" name="gender" value="female">Female</td>
+			</tr>
+
+			<tr>
+				<td><label>DateOfBirth:</label> <input type="date"
+					name="birthDay" id="birthDay"></td>
+			</tr>
+
+			<tr>
+				<td><input type="submit" value="Submit"></td>
+			</tr>
+
+		</table>
+	</form>
+</body>
 </html>
