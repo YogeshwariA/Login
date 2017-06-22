@@ -2,6 +2,56 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
 
 	<servlet>
+		<servlet-name>DefaultServlet</servlet-name>
+		<jsp-file>/WEB-INF/login.html</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DefaultServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GotoSignupServlet</servlet-name>
+		<jsp-file>/WEB-INF/signup.html</jsp-file>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GotoSignupServlet</servlet-name>
+		<url-pattern>/gotosignup</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GotoLogoutServlet</servlet-name>
+		<jsp-file>/WEB-INF/logout.html</jsp-file>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GotoLogoutServlet</servlet-name>
+		<url-pattern>/goToLogout</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GotoMainServlet</servlet-name>
+		<jsp-file>/WEB-INF/main.html</jsp-file>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GotoMainServlet</servlet-name>
+		<url-pattern>/goToMain</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GotoLogoutConfirmationServlet</servlet-name>
+		<jsp-file>/WEB-INF/logout_confirmation.html</jsp-file>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GotoLogoutConfirmationServlet</servlet-name>
+		<url-pattern>/goToLogoutconfirm</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
 		<servlet-name>HomeServlet</servlet-name>
 		<servlet-class>com.yogu.login.HomeServlet</servlet-class>
 
@@ -12,9 +62,6 @@
 		<servlet-name>HomeServlet</servlet-name>
 		<url-pattern>/home</url-pattern>
 		<url-pattern>/main</url-pattern>
-		<url-pattern>/gotosignup</url-pattern>
-		
-
 	</servlet-mapping>
 
 	<servlet>

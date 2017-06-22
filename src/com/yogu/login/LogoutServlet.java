@@ -19,7 +19,6 @@ public class LogoutServlet extends HttpServlet {
 			doGet(req, resp);
 		}
 	}
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if ("/logoutconfirm".equals(req.getRequestURI())) {
@@ -31,7 +30,7 @@ public class LogoutServlet extends HttpServlet {
 	}
 
 	private void goToLogoutHtml(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/logout_confirmation.html").forward(req, resp);
+		req.getRequestDispatcher("/goToLogoutconfirm").forward(req, resp);
 	}
 
 	private void sessionInValidate(HttpServletRequest req, HttpServletResponse resp)
@@ -42,7 +41,7 @@ public class LogoutServlet extends HttpServlet {
 
 			resp.getWriter().println("Successfully logout.");
 
-			req.getRequestDispatcher("/WEB-INF/logout.html").forward(req, resp);
+			req.getRequestDispatcher("/goToLogout").forward(req, resp);
 
 		} else {
 			req.getRequestDispatcher("/home").forward(req, resp);

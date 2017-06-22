@@ -21,25 +21,24 @@ public class HomeServlet extends HttpServlet {
 			goToLoginHtml(req, resp);
 		} else if ("/main".equals(req.getRequestURI())) {
 			welcomeUser(req, resp);
-		} else if ("/gotosignup".equals(req.getRequestURI())) {
+		}/* else if ("/gotosignup".equals(req.getRequestURI())) {
 			req.getRequestDispatcher("/WEB-INF/signup.html").forward(req, resp);
 		}
-
+*/
 	}
-
 	private void welcomeUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		if (session == null || session.getAttribute("username") == null) {
 			req.getRequestDispatcher("/home").forward(req, resp);
 		} else {
-			resp.getWriter().println("Welcome!" + session.getAttribute("username"));
+			resp.getWriter().println("Welcome!!!   " + session.getAttribute("username"));
 
-			req.getRequestDispatcher("/WEB-INF/main.html").forward(req, resp);
+			req.getRequestDispatcher("/goToMain").forward(req, resp);
 		}
 	}
 
 	private void goToLoginHtml(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/login.html").forward(req, resp);
+		req.getRequestDispatcher("/").forward(req, resp);
 	}
 
 	
