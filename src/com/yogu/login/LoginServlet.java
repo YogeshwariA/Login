@@ -1,6 +1,7 @@
 package com.yogu.login;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpSession;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @SuppressWarnings("serial")
 public class LoginServlet extends HttpServlet {
@@ -37,7 +41,6 @@ public class LoginServlet extends HttpServlet {
 		} else if ("/signup".equals(req.getRequestURI())) {
 			signUpUser(req, resp);
 		}
-
 	}
 
 	private void loginUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,22 +48,37 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("password");
 
 		if ((emailId != null && !emailId.isEmpty()) && (password != null && !password.isEmpty())) {
-			HttpSession session = req.getSession();
-			/*
-			 * for (UserDetails user : entity) { if
-			 * (user.getEmailId().equalsIgnoreCase(emailId)) { if (password !=
-			 * null && password.equals(user.getPassword())) {
-			 * 
-			 * session.setAttribute("username", user.getFirstName() + " " +
-			 * user.getLastName());
-			 * req.getRequestDispatcher("/main").forward(req, resp); } else {
-			 * resp.getWriter().println("Username or Password is wrong"); }
-			 * break; } }
-			 * 
-			 * if (session.getAttribute("username") == null) {
-			 * resp.getWriter().println("Your not sigup.Please singup. "); }
-			 */ } else {
+			Entity user = checkUserDetails(emailId);
+			System.out.println("user" + user);
+			if (user == null) {
+
+				resp.getWriter().println("Your not sigup.Please signup. ");
+			} else {
+				String dbpassword = (String) user.getProperty("Password");
+			
+				if (dbpassword.equals(password)) {
+					HttpSession session = req.getSession(true);
+					session.setAttribute("username", user.getProperty("FirstName"));
+					req.getRequestDispatcher("/main").forward(req, resp);
+				} else {
+					resp.getWriter().println("Username or Password is wrong");
+
+				}
+			}
+
+		} else {
 			resp.getWriter().println("Please give correct credentials");
+		}
+
+	}
+
+	private Entity checkUserDetails(String emailAsKey) {
+		Key key = KeyFactory.createKey("Users", emailAsKey);
+		try {
+			Entity user = datastore.get(key);
+			return user;
+		} catch (EntityNotFoundException e) {
+			return null;
 		}
 
 	}
@@ -75,54 +93,28 @@ public class LoginServlet extends HttpServlet {
 
 		if ((firstName != null && !firstName.isEmpty()) && (lastName != null && !lastName.isEmpty())
 				&& (emailId != null && !emailId.isEmpty()) && (password != null && !password.isEmpty())) {
-			Entity entity = new Entity("Users", emailId);
-			entity.setProperty("FirstName", firstName);
-			entity.setProperty("LastName", lastName);
-			entity.setProperty("EmailId", emailId);
-			entity.setProperty("Password", password);
-			entity.setProperty("Gender", gender);
-			entity.setProperty("DateOfBirth", dateOfBirth);
+			Entity user = checkUserDetails(emailId);
 
-			datastore.put(entity);
-			HttpSession session = req.getSession();
-			session.setAttribute("username", firstName + " " + lastName);
-			resp.getWriter().println("Successfully signed up.");
-			resp.sendRedirect("/main");
+			if (user == null) {
+				Entity entity = new Entity("Users", emailId);
+				entity.setProperty("FirstName", firstName);
+				entity.setProperty("LastName", lastName);
+				entity.setProperty("EmailId", emailId);
+				entity.setProperty("Password", password);
+				entity.setProperty("Gender", gender);
+				entity.setProperty("DateOfBirth", dateOfBirth);
+				datastore.put(entity);
+				HttpSession session = req.getSession();
+				session.setAttribute("username", firstName + " " + lastName);
+				resp.getWriter().println("Successfully signed up.");
+				resp.sendRedirect("/main");
+			} else {
+				resp.getWriter().println("EmailId already exists");
+			}
 		} else {
 			resp.getWriter().println("Please give correct credentials");
 		}
-		/*
-		 * if (firstName != null && !firstName.isEmpty()) {
-		 * user.setFirstName(firstName); } else {
-		 * resp.getWriter().println("First name is mandatory."); }
-		 * 
-		 * if (lastName != null && !lastName.isEmpty()) {
-		 * user.setLastName(lastName); } else {
-		 * resp.getWriter().println("Last name is mandatory."); }
-		 * 
-		 * if ((emailId != null && !emailId.isEmpty())) {
-		 * user.setEmailId(emailId); } else {
-		 * resp.getWriter().println("Email id is mandatory."); }
-		 * 
-		 * if (password != null && !password.isEmpty()) {
-		 * user.setPassword(password); } else {
-		 * resp.getWriter().println("password is mandatory."); }
-		 * 
-		 * user.setGender(gender); user.setDateOfBirth(dateOfBirth); boolean
-		 * isUserExists = false; for (UserDetails userDetail : users) { if
-		 * (userDetail.getEmailId().equals(emailId)) {
-		 * resp.getWriter().println("Email id is already exists "); isUserExists
-		 * = true; break; } }
-		 * 
-		 * if (!isUserExists && (firstName != null && !firstName.isEmpty()) &&
-		 * (lastName != null && !lastName.isEmpty()) && (emailId != null &&
-		 * !emailId.isEmpty()) && (password != null && !password.isEmpty())) {
-		 * 
-		 * users.add(user); HttpSession session = req.getSession();
-		 * session.setAttribute("username", firstName + " " + lastName);
-		 * resp.getWriter().println("Successfully signed up.");
-		 * resp.sendRedirect("/main"); }
-		 */ }
+	}
 
 	@Override
 	public void destroy() {
