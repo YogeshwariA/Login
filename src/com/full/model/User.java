@@ -1,12 +1,17 @@
 package com.full.model;
 
 import java.util.Date;
+
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class User {
 	private String firstName;
 	private String lastName;
+	
+//	private Long id;
+	@Id
 	private String emailId;
 	private String password;
 	private Date dateofBirth;
@@ -59,4 +64,14 @@ public class User {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+	/*public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}*/
+	
+	
 }

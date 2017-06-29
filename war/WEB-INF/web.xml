@@ -46,10 +46,10 @@
 		<servlet-name>GotoLogoutConfirmationServlet</servlet-name>
 		<url-pattern>/goToLogoutconfirm</url-pattern>
 	</servlet-mapping>
-	-->
+	
 	<servlet>
 		<servlet-name>HomeServlet</servlet-name>
-		<servlet-class>com.yogu.login.HomeServlet</servlet-class>
+		<servlet-class>com.full.servlet.HomeServlet</servlet-class>
 
 	</servlet>
 
@@ -62,7 +62,7 @@
 
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>com.yogu.login.LoginServlet</servlet-class>
+		<servlet-class>com.full.servlet.LoginServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
@@ -71,7 +71,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
-		<servlet-class>com.yogu.login.LogoutServlet</servlet-class>
+		<servlet-class>com.full.servlet.LogoutServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
